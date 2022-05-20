@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:helpist/testMenu.dart';
 
 import 'accueil.dart';
 import 'calendrier.dart';
@@ -29,7 +30,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Widget> _tabs = [
     Accueil(title: "Accueil"),
-    Calendrier(title: "Calendrier")
+    Calendrier(title: "Calendrier"),
+    //Tache(title: "Tâches"),
+    TestMenu(title: "Tests")
   ];
 
   @override
@@ -39,8 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today_rounded), label: 'Calendrier'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.check_rounded), label: 'Tâches'),
+          //BottomNavigationBarItem(
+              //icon: Icon(Icons.check_rounded), label: 'Tâches'),
           BottomNavigationBarItem(
               icon: Icon(Icons.bar_chart_rounded), label: 'Tests'),
           BottomNavigationBarItem(
@@ -55,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   
 }
+
 
 // TODO: Se renseigner sur les States.
 class CupertinoPage extends StatelessWidget {

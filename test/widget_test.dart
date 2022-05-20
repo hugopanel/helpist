@@ -28,3 +28,28 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 }
+
+class TestMenu extends StatelessWidget {
+  const TestMenu ();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56.0,
+      child: Row(
+        children: [
+          const Text("Test QSA"),
+          const ButtonBar(
+            children: [
+              FlatButton(
+                child: Text("Faire le test"),
+                onPressed: null
+              )
+            ],
+          )
+        ]
+      )
+    );
+    throw UnimplementedError();
+  }
+}
