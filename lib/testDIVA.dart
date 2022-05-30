@@ -6,80 +6,45 @@ import 'package:helpist/main.dart';
 
 
 class TestDIVA extends StatelessWidget {
-  bool value1=false;
-  TestDIVA({Key? key, required this.title}) : super(key: key);
-  final String title;
+  TestDIVA({super.key});
+  bool value1 = false;
+  List<bool> Tvalue = [] ;
 
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: Text(title),
+          middle: Text("Test DIVA"),
         ),
-        child: ListView(
-            children: <Widget>[
-              Container(
-                height: 200.0,
-                child: Row(
-                    children: [
-                      Checkbox(
-                        value: this.value1,
-                        onChanged: (bool value) {
-                          setState(() {
-                            this.value1 = value;
-                          });
-                        },
-                      ),
-                    ]
-                ),
-              ),
-              Container(
-                  height: 200.0,
-                  child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Text(
-                            "Test DIVA (TDAH)",
-                            style: TextStyle(fontSize: 30.0),
-                          ),
-                        ),
-                        const ButtonBar(
-                          children: [
-                            ElevatedButton(
-                                child: Text("Faire le test"),
-                                onPressed: null
-                            )
-                          ],
-                        )
-                      ]
-                  )
-              ),
-              Container(
-                  height: 200.0,
-                  child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Text(
-                            "Test RAADS (autisme)",
-                            style: TextStyle(fontSize: 30.0),
-                          ),
-                        ),
-                        const ButtonBar(
-                          children: [
-                            ElevatedButton(
-                                child: Text("Faire le test"),
-                                onPressed: null
-                            )
-                          ],
-                        )
-                      ]
-                  )
-              )
-            ]
-        )
+          child: Column(children: [
+            Container(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Première question',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  color: Colors.black54),
+            ),
+          ),
+        Expanded(
+        child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [CheckboxListTile(
+                title: Text('vrai'),
+                value: false,
+                onChanged: (bool? value) {
+                  setState(() {
+                  Tvalue[0] = value!;
+                });
+                },
+              )],
+            ),
+        ),
+            flex: 1),
+      ])
     );
     throw UnimplementedError();
   }

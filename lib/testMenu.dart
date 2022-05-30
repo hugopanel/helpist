@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:helpist/main.dart';
+import 'package:helpist/testDIVA.dart';
 
 
 class TestMenu extends StatelessWidget {
@@ -24,15 +25,17 @@ class TestMenu extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(20),
                 child: Text(
-                  "Test QSA (autisme)",
+                  "Test DIVA (TDAH)",
                   style: TextStyle(fontSize: 30.0),
                 ),
               ),
-              const ButtonBar(
+              ButtonBar(
                 children: [
                   ElevatedButton(
                       child: Text("Faire le test"),
-                      onPressed: null
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>TestDIVA()));
+                    }
                   )
                 ],
               )
@@ -46,7 +49,7 @@ class TestMenu extends StatelessWidget {
                       const Padding(
                         padding: EdgeInsets.all(20),
                         child: Text(
-                          "Test DIVA (TDAH)",
+                          "Test QSA (autisme)",
                           style: TextStyle(fontSize: 30.0),
                         ),
                       ),
