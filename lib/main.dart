@@ -3,15 +3,23 @@ import 'package:flutter/cupertino.dart';
 
 import 'dart:async';
 import 'package:flutter/widgets.dart';
+import 'package:helpist/taches.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
 import 'Models/Tache.dart';
 
 import 'accueil.dart';
 import 'calendrier.dart';
 
-void main() {
+void main() async {
+  // Be sure to add this line if initialize() call happens before runApp()
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await AndroidAlarmManager.initialize();
+
   runApp(const MyApp());
 }
 
@@ -37,7 +45,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Widget> _tabs = [
     Accueil(title: "Accueil"),
-    Calendrier(title: "Calendrier")
+    Calendrier(title: "Calendrier"),
+    Taches(title: "Mes tâches titre")
   ];
 
   @override

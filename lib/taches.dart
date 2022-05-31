@@ -1,15 +1,28 @@
 // Tâches récurrentes
 
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'customCardWidget.dart';
 
-class Taches extends StatelessWidget {
+class Taches extends StatefulWidget {
   const Taches({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
+  State<StatefulWidget> createState() {
+    return _TachesState();
+  }
+
+}
+
+class _TachesState extends State<Taches> {
+  String title = "Page 'Mes tâches'";
+
+  bool isOn = false;
+  int alarmId = 0;
+
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -32,13 +45,21 @@ class Taches extends StatelessWidget {
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    customCardWidget(
-                        title: "Tâches récurrentes",
-                        content:
-                        "hehehehehehe",
-                        action: TextButton(
-                            onPressed: () {},
-                            child: Text("Mes tâches"))),
+                      CupertinoSwitch(
+                        value: isOn,
+                        onChanged: (bool value) {
+                          setState(() { isOn = value; });
+                          AndroidAlarmManager.oneShot(
+                            Duration(seconds: 1),
+                            alarmId,
+                            fireAlarm,
+                          );
+                          
+                          if (!isOn) {
+                            AndroidAlarmManager.cancel(alarmId);
+                          }
+                          },
+                    ),
                   ],
                 ),
               ),
@@ -46,4 +67,14 @@ class Taches extends StatelessWidget {
           ]),
     );
   }
+}
+
+void fireAlarm() {
+  print('Alarm Fired at ${DateTime.now()}');
+
+  AndroidAlarmManager.oneShot(
+    Duration(seconds: 1),
+    0,
+    fireAlarm,
+  );
 }
