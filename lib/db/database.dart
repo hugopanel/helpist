@@ -25,12 +25,14 @@ class TachesDatabase {
   }
 
   Future _createDB(Database db, int version) async {
-    final nomType = 'TEXT PRIMARY KEY';
+    final idType = 'INT PRIMARY KEY';
+    final nomType = 'TEXT';
     final activeType = 'BOOLEAN';
     final horaireType = 'DATETIME';
 
     await db.execute('''
     CREATE TABLE $tableTaches ( 
+      ${TacheFields.id} $idType,
       ${TacheFields.nom} $nomType, 
       ${TacheFields.active} $activeType,
       ${TacheFields.horaire} $horaireType
@@ -41,7 +43,61 @@ class TachesDatabase {
   Future<Tache> create(Tache tache) async {
     final db = await instance.database;
 
-    final nom = await db.insert(tableTaches, tache.toJson());
-    return tache.copy(nom: nom);
+    final id = await db.insert(tableTaches, tache.toJson());
+    return tache.copy(id: id);
+  }
+
+  Future<Tache> readTache(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableTaches,
+      columns: TacheFields.values,
+      where: '${TacheFields.id} = ?',
+      whereArgs: [id]
+    );
+
+    if (maps.isNotEmpty) {
+      return Tache.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  Future<List<Tache>> readAllTaches() async {
+    final db = await instance.database;
+
+    final orderBy = '${TacheFields.id} ASC';
+
+    final result = await db.query(tableTaches, orderBy: orderBy);
+
+    return result.map((json) => Tache.fromJson(json)).toList();
+  }
+
+  Future<int> update(Tache tache) async {
+    final db = await instance.database;
+
+    return db.update(
+      tableTaches,
+      tache.toJson(),
+      where: '${TacheFields.id} = ?',
+      whereArgs: [tache.id]
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await instance.database;
+
+    return await db.delete(
+      tableTaches,
+      where: '${TacheFields.id} = ?',
+      whereArgs: [id]
+    );
+  }
+
+  Future close() async {
+    final db = await instance.database;
+
+    db.close();
   }
 }

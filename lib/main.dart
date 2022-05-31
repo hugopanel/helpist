@@ -11,68 +11,7 @@ import 'Models/Tache.dart';
 import 'accueil.dart';
 import 'calendrier.dart';
 
-void main() async {
-  // Ouverture de la base de données
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final database = openDatabase(
-    join(await getDatabasesPath(), 'helpist.db'),
-
-    // Si la base de données n'existe pas encore, il faut la créer :
-    onCreate: (db, version) {
-      return db.execute(
-        'CREATE TABLE taches(nom TEXT PRIMARY KEY, active BOOLEAN, horaire DATETIME)',
-      );
-    },
-
-    version: 1,
-  );
-
-  Future<void> insertTache(Tache tache) async {
-    final db = await database;
-
-    await db.insert(
-      'taches',
-      tache.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  Future<List<Tache>> taches() async {
-    final db = await database;
-
-    final List<Map<String, dynamic>> maps = await db.query('taches');
-
-    return List.generate(maps.length, (i) {
-      return Tache(
-        nom: maps[i]['nom'],
-        active: maps[i]['active'],
-        horaire: maps[i]['horaire']
-      );
-    });
-  }
-
-  Future<void> updateTache(Tache tache) async {
-    final db = await database;
-
-    await db.update(
-      'taches',
-      tache.toMap(),
-      where: 'nom = ?',
-      whereArgs: [tache.nom]
-    );
-  }
-
-  Future<void> deleteTache(Tache tache) async {
-    final db = await database;
-
-    await db.delete(
-      'taches',
-      where: 'nom = ?',
-      whereArgs: [tache.nom]
-    );
-  }
-
+void main() {
   runApp(const MyApp());
 }
 
