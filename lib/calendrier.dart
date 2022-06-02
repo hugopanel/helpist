@@ -15,30 +15,12 @@ class Calendrier extends StatelessWidget {
       ),
       child: ListView(
         // padding: const EdgeInsets.all(8),
-          children: <Widget>[
-            Container(
-              child: const Padding(
-                padding: EdgeInsets.all(15),
-                child: Text(
-                  "CALENDRIER",
-                  style: TextStyle(fontSize: 35.0),
-                ),
-              ),
-            ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
-                    customCardWidget(
-                        title: "Calendrier",
-                        content:
-                        "hehehehehehe",
-                        action: TextButton(
-                            onPressed: () {},
-                            child: Text("Mon calendrier"))),
-                  ],
-                ),
+          children: const <Widget>[
+            Padding(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                "Le calendrier n'est pas encore disponible.",
+                style: TextStyle(fontSize: 35.0),
               ),
             ),
           ]),

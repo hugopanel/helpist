@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'dart:async';
 import 'package:flutter/widgets.dart';
+import 'package:helpist/guides.dart';
 import 'package:helpist/taches.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -43,10 +44,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Widget> _tabs = [
-    Accueil(title: "Accueil"),
-    Calendrier(title: "Calendrier"),
-    Taches(title: "Mes tâches titre")
+  final List<Widget> _tabs = [
+    const Accueil(title: "Accueil"),
+    const Calendrier(title: "Calendrier"),
+    const Taches(title: "Mes tâches récurrentes"),
+    const Taches(title: "Mes tâches récurrentes"),
+    const Guides(title: "Guides et Informations"),
   ];
 
   @override
@@ -95,7 +98,6 @@ class CupertinoPage extends StatelessWidget {
         tabBuilder: (BuildContext context, int index) {
           return CupertinoTabView(builder: (BuildContext context) {
             return Accueil(key: key, title: "Accueil");
-            // return Accueil(key: key, title: "Accueil");
           });
         });
   }

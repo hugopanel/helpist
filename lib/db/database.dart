@@ -29,13 +29,15 @@ class TachesDatabase {
     final nomType = 'TEXT';
     final activeType = 'BOOLEAN';
     final horaireType = 'DATETIME';
+    final joursType = 'TEXT';
 
     await db.execute('''
     CREATE TABLE $tableTaches ( 
       ${TacheFields.id} $idType,
       ${TacheFields.nom} $nomType, 
       ${TacheFields.active} $activeType,
-      ${TacheFields.horaire} $horaireType
+      ${TacheFields.horaire} $horaireType,
+      ${TacheFields.jours} $joursType
       )
     ''');
   }
@@ -64,10 +66,23 @@ class TachesDatabase {
     }
   }
 
+  Future<bool> existsTache(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableTaches,
+      columns: TacheFields.values,
+      where: '${TacheFields.id} = ?',
+      whereArgs: [id]
+    );
+
+    return maps.isNotEmpty;
+  }
+
   Future<List<Tache>> readAllTaches() async {
     final db = await instance.database;
 
-    final orderBy = '${TacheFields.id} ASC';
+    final orderBy = '${TacheFields.id} DESC';
 
     final result = await db.query(tableTaches, orderBy: orderBy);
 
