@@ -2,10 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:helpist/testMenu.dart';
 
+import 'dart:async';
+import 'package:flutter/widgets.dart';
+import 'package:helpist/guides.dart';
+import 'package:helpist/taches.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+
+import 'Models/Tache.dart';
+
 import 'accueil.dart';
 import 'calendrier.dart';
 
-void main() {
+void main() async {
+  // Be sure to add this line if initialize() call happens before runApp()
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await AndroidAlarmManager.initialize();
+
   runApp(const MyApp());
 }
 
@@ -16,9 +32,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-        title: 'Flutter Demo',
-        theme: CupertinoThemeData(brightness: Brightness.light),
-        home: MyHomePage());
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: CupertinoThemeData(brightness: Brightness.light),
+      home: MyHomePage());
   }
 }
 
@@ -28,11 +45,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Widget> _tabs = [
-    Accueil(title: "Accueil"),
-    Calendrier(title: "Calendrier"),
-    //Tache(title: "Tâches"),
-    TestMenu(title: "Tests")
+  final List<Widget> _tabs = [
+    const Accueil(title: "Accueil"),
+    const Calendrier(title: "Calendrier"),
+    const Taches(title: "Mes tâches récurrentes"),
+    const TestMenu(title: "Mes tests"),
+    const Guides(title: "Guides et Informations"),
   ];
 
   @override
@@ -42,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today_rounded), label: 'Calendrier'),
-          //BottomNavigationBarItem(
-              //icon: Icon(Icons.check_rounded), label: 'Tâches'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.check_rounded), label: 'Tâches'),
           BottomNavigationBarItem(
               icon: Icon(Icons.bar_chart_rounded), label: 'Tests'),
           BottomNavigationBarItem(
@@ -58,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   
 }
-
 
 // TODO: Se renseigner sur les States.
 class CupertinoPage extends StatelessWidget {
@@ -82,7 +99,6 @@ class CupertinoPage extends StatelessWidget {
         tabBuilder: (BuildContext context, int index) {
           return CupertinoTabView(builder: (BuildContext context) {
             return Accueil(key: key, title: "Accueil");
-            // return Accueil(key: key, title: "Accueil");
           });
         });
   }
