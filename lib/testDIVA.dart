@@ -1649,21 +1649,11 @@ class TestDIVA extends StatefulWidget {
                 )
               ],
             ),
-            Container(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'Pour scroller',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                    color: Colors.black),
-              ),
-            ),
+            SizedBox(height: 50),
 
         ]),
         )
         );
-    throw UnimplementedError();
   }
 
 }
